@@ -39,6 +39,7 @@ export const SET_SAMPLE_LOADING_STATUS = 'SET_SAMPLE_LOADING_STATUS';
 // Sharing
 export const PUSHING_FILE = 'PUSHING_FILE';
 export const CLOUD_LOGIN_SUCCESS = 'CLOUD_LOGIN_SUCCESS';
+export const TRIGGER_MAGIC_LOGGER = 'TRIGGER_MAGIC_LOGGER';
 
 // ACTIONS
 export function initApp() {
@@ -338,5 +339,12 @@ export function loadSampleConfigurations(sampleMapId = null) {
         }
       }
     });
+  };
+}
+
+
+export function triggerMagicLogger() {
+  return {
+    type: TRIGGER_MAGIC_LOGGER
   };
 }

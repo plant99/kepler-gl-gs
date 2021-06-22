@@ -27,6 +27,7 @@ import {connect} from 'react-redux';
 import {theme} from 'kepler.gl/styles';
 import Banner from './components/banner';
 import Announcement, {FormLink} from './components/announcement';
+import MagicButton from './components/magicButton';
 import {replaceLoadDataModal} from './factories/load-data-modal';
 import {replaceMapControl} from './factories/map-control';
 import {replacePanelHeader} from './factories/panel-header';
@@ -359,7 +360,7 @@ class App extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
+      [<ThemeProvider theme={theme}>
         <GlobalStyle
           // this is to apply the same modal style as kepler.gl core
           // because styled-components doesn't always return a node
@@ -379,11 +380,11 @@ class App extends Component {
           <div
             style={{
               transition: 'margin 1s, height 1s',
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
+              position: 'relative',
+              height: '600px',
               left: 0,
-              top: 0
+              top: 0,
+              minHeight: `calc(100% - ${BannerHeight}px)`
             }}
           >
             <AutoSizer>
@@ -406,7 +407,8 @@ class App extends Component {
             </AutoSizer>
           </div>
         </GlobalStyle>
-      </ThemeProvider>
+      </ThemeProvider>,
+      <MagicButton/>]
     );
   }
 }

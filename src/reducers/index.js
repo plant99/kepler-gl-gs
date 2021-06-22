@@ -20,6 +20,7 @@
 
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
+import _ from 'lodash';
 
 import keplerGlReducer, {combinedUpdaters, uiStateUpdaters} from 'kepler.gl/reducers';
 import {processGeojson, processCsvData} from 'kepler.gl/processors';
@@ -31,7 +32,8 @@ import {
   LOAD_MAP_SAMPLE_FILE,
   LOAD_REMOTE_RESOURCE_SUCCESS,
   LOAD_REMOTE_RESOURCE_ERROR,
-  SET_SAMPLE_LOADING_STATUS
+  SET_SAMPLE_LOADING_STATUS,
+  TRIGGER_MAGIC_LOGGER
 } from '../actions';
 
 import {AUTH_TOKENS, DEFAULT_FEATURE_FLAGS} from '../constants/default-settings';
@@ -177,9 +179,20 @@ export const loadRemoteResourceError = (state, action) => {
   };
 };
 
+export const triggerMagicLogger = (state, action) => {
+  // state has 2 components, keplerGl and app
+  // ideally the app logic goes into app and the map logic maps to <name of map> keplerGl
+  window.state=state;
+  console.log(state);
+  console.log(state.keplerGl.map.visState.datasets);
+  console.log("Tada, magic. Here you can change the state!");
+  return _.cloneDeep(state);
+}
+
 const composedUpdaters = {
   [LOAD_REMOTE_RESOURCE_SUCCESS]: loadRemoteResourceSuccess,
-  [LOAD_REMOTE_RESOURCE_ERROR]: loadRemoteResourceError
+  [LOAD_REMOTE_RESOURCE_ERROR]: loadRemoteResourceError,
+  [TRIGGER_MAGIC_LOGGER]: triggerMagicLogger
 };
 
 const composedReducer = (state, action) => {
